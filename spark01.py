@@ -3,14 +3,11 @@ from pyspark.sql import SparkSession
 spark = SparkSession.builder.getOrCreate()
 
 myRange = spark.range(1000).toDF("number")
-
 myRange.show()
 
 myRange.printSchema()
 
-
 spark.sql("SELECT 1 + 1").show()
-
 
 # narrow transformations 
 #the where statement specifies a narrow dependency, where only one partition contributes to at 
