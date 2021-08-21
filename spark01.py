@@ -27,7 +27,7 @@ divisBy2.show()
 
 # in Python
 flightData2015 = spark.read.option("inferSchema", "true").option("header", "true")\
-.csv("../Python/Codigo - Python/Bases/2015-summary.csv")
+.csv("/Bases/2015-summary.csv")
 
 
 flightData2015.take(3)
