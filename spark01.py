@@ -13,8 +13,8 @@ spark.sql("SELECT 1 + 1").show()
 
 
 # narrow transformations 
-#the where statement specifies a narrow dependency, where only one partition contributes 
-#to at most one output partition
+#the where statement specifies a narrow dependency, where only one partition contributes to at 
+# most one output partition
 #A wide dependency (or wide transformation) will have input partitions contributing to many 
 #output partitions. You will often hear this referred to as a shuffle whereby
 #Spark will exchange partitions across the cluster. With narrow transformations, Spark will
