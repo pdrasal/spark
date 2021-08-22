@@ -66,3 +66,6 @@ ORDER BY sum(count) DESC
 LIMIT 5
 """)
 maxSql.show()
+
+# test
+spark.sql("""SELECT * FROM flight_data_2015 LIMIT 5""").show()
