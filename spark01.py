@@ -56,6 +56,9 @@ dataFrameWay.show()
 
 spark.sql("SELECT max(count) from flight_data_2015").take(1)
 
+spark.sql("""SELECT * from flight_data_2015 Where ORIGIN_COUNTRY_NAME='United States' 
+          order by count desc""").show()
+
 flightData2015.select(max("count")).take(1)
 
 maxSql = spark.sql("""
