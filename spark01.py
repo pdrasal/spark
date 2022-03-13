@@ -1,4 +1,3 @@
-
 from pyspark.sql import SparkSession
 spark = SparkSession.builder.getOrCreate()
 
@@ -28,7 +27,7 @@ divisBy2.show()
 flightData2015 = spark.read.option("inferSchema", "true").option("header", "true")\
 .csv("Bases/2015-summary.csv")
 
-flightData2015.take(3)
+flightData2015.head(3)
 
 flightData2015.sort("count").explain()
 
@@ -56,11 +55,6 @@ dataFrameWay.show()
 
 spark.sql("SELECT max(count) from flight_data_2015").take(1)
 
-'''testing'''
- 
-spark.sql("""SELECT * from flight_data_2015 Where ORIGIN_COUNTRY_NAME='United States' 
-          order by count desc""").show()
-
 flightData2015.select(max("count")).take(1)
 
 maxSql = spark.sql("""
@@ -72,6 +66,7 @@ LIMIT 5
 """)
 maxSql.show()
 
+maxSql.explain()
 
 # test
 spark.sql("""SELECT * FROM flight_data_2015 LIMIT 5""").show()
