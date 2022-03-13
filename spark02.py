@@ -1,7 +1,9 @@
 from pyspark.sql import SparkSession
 spark = SparkSession.builder.getOrCreate()
 
-df = spark.read.format("json").load("Bases/2015-summary.json")
+df = spark.read.format("json").load("2015-summary.json")
+
+spark.read.format("json").load("2015-summary.json").schema
 
 # COMMAND ----------
 
