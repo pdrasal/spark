@@ -7,11 +7,6 @@ spark.read.format("json").load("2015-summary.json").schema
 
 # COMMAND ----------
 
-spark.read.format("json").load("Bases/2015-summary.json").schema
-
-
-# COMMAND ----------
-
 from pyspark.sql.types import StructField, StructType, StringType, LongType
 
 myManualSchema = StructType([
@@ -20,7 +15,7 @@ myManualSchema = StructType([
   StructField("count", LongType(), False, metadata={"hello":"world"})
 ])
 df = spark.read.format("json").schema(myManualSchema)\
-  .load("/data/flight-data/json/2015-summary.json")
+  .load("2015-summary.json")
 
 
 # COMMAND ----------
@@ -32,66 +27,16 @@ column("someColumnName")
 
 # COMMAND ----------
 
-from pyspark.sql.functions import expr
-expr("(((someCol + 5) * 200) - 6) < otherCol")
-
-
-# COMMAND ----------
-
-from pyspark.sql import Row
-myRow = Row("Hello", None, 1, False)
-
-
-# COMMAND ----------
-
-myRow[0]
-myRow[2]
-
-
-# COMMAND ----------
-
-df = spark.read.format("json").load("/data/flight-data/json/2015-summary.json")
+df = spark.read.format("json").load("2015-summary.json")
 df.createOrReplaceTempView("dfTable")
-
-
-# COMMAND ----------
-
-from pyspark.sql import Row
-from pyspark.sql.types import StructField, StructType, StringType, LongType
-myManualSchema = StructType([
-  StructField("some", StringType(), True),
-  StructField("col", StringType(), True),
-  StructField("names", LongType(), False)
-])
-myRow = Row("Hello", None, 1)
-myDf = spark.createDataFrame([myRow], myManualSchema)
-myDf.show()
-
-
-# COMMAND ----------
 
 df.select("DEST_COUNTRY_NAME").show(2)
 
-
-# COMMAND ----------
-
 df.select("DEST_COUNTRY_NAME", "ORIGIN_COUNTRY_NAME").show(2)
-
-
-# COMMAND ----------
-
-from pyspark.sql.functions import expr, col, column
-df.select(
-    expr("DEST_COUNTRY_NAME"),
-    col("DEST_COUNTRY_NAME"),
-    column("DEST_COUNTRY_NAME"))\
-  .show(2)
-
 
 # COMMAND ----------
 
 df.select(expr("DEST_COUNTRY_NAME AS destination")).show(2)
-
 
 # COMMAND ----------
 
@@ -99,10 +44,7 @@ df.select(expr("DEST_COUNTRY_NAME as destination").alias("DEST_COUNTRY_NAME"))\
   .show(2)
 
 
-# COMMAND ----------
-
 df.selectExpr("DEST_COUNTRY_NAME as newColumnName", "DEST_COUNTRY_NAME").show(2)
-
 
 # COMMAND ----------
 
@@ -164,13 +106,7 @@ dfWithLongColName.select(expr("`This Long Column-Name`")).columns
 df.where(col("count") < 2).where(col("ORIGIN_COUNTRY_NAME") != "Croatia")\
   .show(2)
 
-
-# COMMAND ----------
-
 df.select("ORIGIN_COUNTRY_NAME", "DEST_COUNTRY_NAME").distinct().count()
-
-
-# COMMAND ----------
 
 df.select("ORIGIN_COUNTRY_NAME").distinct().count()
 
@@ -233,7 +169,6 @@ spark.read.format("json").load("/data/flight-data/json/*-summary.json")\
 
 df.limit(5).show()
 
-
 # COMMAND ----------
 
 df.orderBy(expr("count desc")).limit(6).show()
@@ -271,6 +206,3 @@ collectDF.take(5) # take works with an Integer count
 collectDF.show() # this prints it out nicely
 collectDF.show(5, False)
 collectDF.collect()
-
-
-# COMMAND ----------
